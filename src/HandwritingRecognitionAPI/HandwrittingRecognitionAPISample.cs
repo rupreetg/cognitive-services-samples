@@ -40,9 +40,13 @@ namespace VisionAPI
 
         private byte[] CreateByteArrayFromImage(string imagePath)
         {
-            FileStream fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
-            BinaryReader binaryReader = new BinaryReader(fileStream);
-            return binaryReader.ReadBytes((int)fileStream.Length);
+            using (FileStream fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+            {
+                using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                {
+                    return binaryReader.ReadBytes((int)fileStream.Length);
+                }
+            }
         }
 
     }
